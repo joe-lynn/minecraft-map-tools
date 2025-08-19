@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Minecraft :: Map Center Locator</title>
+<!--
+
+v0.1
+- Initial version
+
+DISCLAIMER:  
+
+Standard disclaimers apply, all wrongs reserved.  Your mileage may vary.  Lather, rinse, repeat.
+
+-->
+<style>
+body {
+	font-family : Tahoma, Arial, Sans-serif;
+	font-size : 9pt;
+}
+th {
+	background-color : #004080;
+	font-weight : bold;
+	color : #fff;
+}
+td {
+	text-align : center;
+	font-size : 12pt;
+}
+.left {
+  text-align : left;
+}
+.sm {
+  font-size : 10pt;
+}
+.blank {
+  background-color : #c0c0ff;
+  border : none;
+}
+.err {
+  background-color : #ffc0c0;
+  border : none;
+}
+.ok {
+  background-color : #c0ff00;
+  border : none;
+}
+</style>
+<script type="text/javascript">
+  
+function isNumber(n) {
+ 
+	return !isNaN(parseFloat(n)) && isFinite(n);
+
+}
+
+function validInput (o) {
+
+	if (o.value == '') {
+		o.className = 'blank';
+		return false;
+	} else if (isNumber(o.value)) {
+		o.className = 'ok';
+		return false;
+	} else {
+		o.className = 'err';
+		return false;
+	}
+
+}
+
+function ccenter (p, z) {
+
+  var w = 128 * (1 << z);
+  var c = Math.floor((p + 64) / w);
+  c = (c * w) + (w / 2) - 64;
+  return c;
+}
+
+function recalc() {
+	
+  var px = document.getElementById('playerx').value;
+  var pz = document.getElementById('playerz').value;
+  var cx = 0;
+  var cz = 0;
+  var nwx = 0;
+  var nwz = 0;
+
+  if (!isNumber(px) || !isNumber(pz)) return false;
+
+  px = parseInt(px);
+  pz = parseInt(pz);
+  
+  var zoom = 0;
+  
+  // default
+  xc = ccenter(px, zoom);
+  zc = ccenter(pz, zoom);
+  nwx = xc - (128 * (1 << zoom)) / 2;
+  nwz = zc - (128 * (1 << zoom)) / 2;
+  sex = nwx + 128 * (1 << zoom) - 1;
+  sez = nwz + 128 * (1 << zoom) - 1;
+  var xz = document.getElementById('l0c');
+  xz.innerHTML = '(' + xc + ' ' + zc + ')';
+  xz = document.getElementById('l0nw');
+  xz.innerHTML = '[' + nwx + ' ' + nwz + ']';
+  xz = document.getElementById('l0se');
+  xz.innerHTML = '[' + sex + ' ' + sez + ']';
+
+  // level 1
+  zoom++;
+  xc = ccenter(px, zoom);
+  zc = ccenter(pz, zoom);
+  nwx = xc - (128 * (1 << zoom)) / 2;
+  nwz = zc - (128 * (1 << zoom)) / 2;
+  sex = nwx + 128 * (1 << zoom) - 1;
+  sez = nwz + 128 * (1 << zoom) - 1;
+  xz = document.getElementById('l1c');
+  xz.innerHTML = '(' + xc + ' ' + zc + ')';
+  xz = document.getElementById('l1nw');
+  xz.innerHTML = '[' + nwx + ' ' + nwz + ']';
+  xz = document.getElementById('l1se');
+  xz.innerHTML = '[' + sex + ' ' + sez + ']';
+
+  // level 2
+  zoom++;
+  xc = ccenter(px, zoom);
+  zc = ccenter(pz, zoom);
+  nwx = xc - (128 * (1 << zoom)) / 2;
+  nwz = zc - (128 * (1 << zoom)) / 2;
+  sex = nwx + 128 * (1 << zoom) - 1;
+  sez = nwz + 128 * (1 << zoom) - 1;
+  xz = document.getElementById('l2c');
+  xz.innerHTML = '(' + xc + ' ' + zc + ')';
+  xz = document.getElementById('l2nw');
+  xz.innerHTML = '[' + nwx + ' ' + nwz + ']';
+  xz = document.getElementById('l2se');
+  xz.innerHTML = '[' + sex + ' ' + sez + ']';
+  
+  // level 3
+  zoom++;
+  xc = ccenter(px, zoom);
+  zc = ccenter(pz, zoom);
+  nwx = xc - (128 * (1 << zoom)) / 2;
+  nwz = zc - (128 * (1 << zoom)) / 2;
+  sex = nwx + 128 * (1 << zoom) - 1;
+  sez = nwz + 128 * (1 << zoom) - 1;
+  xz = document.getElementById('l3c');
+  xz.innerHTML = '(' + xc + ' ' + zc + ')';
+  xz = document.getElementById('l3nw');
+  xz.innerHTML = '[' + nwx + ' ' + nwz + ']';
+  xz = document.getElementById('l3se');
+  xz.innerHTML = '[' + sex + ' ' + sez + ']';
+
+  // level 4
+  zoom++;
+  xc = ccenter(px, zoom);
+  zc = ccenter(pz, zoom);
+  nwx = xc - (128 * (1 << zoom)) / 2;
+  nwz = zc - (128 * (1 << zoom)) / 2;
+  sex = nwx + 128 * (1 << zoom) - 1;
+  sez = nwz + 128 * (1 << zoom) - 1;
+  xz = document.getElementById('l4c');
+  xz.innerHTML = '(' + xc + ' ' + zc + ')';
+  xz = document.getElementById('l4nw');
+  xz.innerHTML = '[' + nwx + ' ' + nwz + ']';
+  xz = document.getElementById('l4se');
+  xz.innerHTML = '[' + sex + ' ' + sez + ']';
+  
+}
+</script>
+</head>
+<body onload="document.getElementById('playerx').focus()">
+<h1>Map Locator</h1>
+<table width="80%" align="center">
+<tr><th colspan="2">How to Use</th></tr>
+<tr><td colspan="2" class="left sm">
+<p>If I know where I am, what area will the map I generate here cover?</p>
+<ul>
+<li>Maps align to a global grid so that all maps of the same zoom level will
+connect seamlessly to their neighboring maps of the same scale factor.  Maps
+near the origin share a common northwest corner at [-64 -64] the corners and
+centers shift as you get further from the center of the world.</li>
+<li>To determine the area a map will cover when you create it, enter your
+current X and Z coordinates and click the calculate button.  This will show
+you where the map will center, as well as the corresponding centers and
+ranges as you scale that map up.</li>
+<li>In order to create a zoomed map with an expected center, the map must be
+in the range of the target map's area.  It's possible to have multiple maps
+that create the same zoomed map.</li>
+</ul>
+
+</td></tr>
+<tr><td class="title">X</td><td class="title">Z</td></tr>
+<tr><td class="entry"><input type="text" class="blank" id="playerx" size="10" maxlength="10" onkeyup="validInput(this);"></td>
+<td class="entry"><input type="text" class="blank" id="playerz" size="10" maxlength="10" onkeyup="validInput(this);"></td>
+</tr>
+<tr><td colspan="2"><input type="button" value="calculate" onclick="recalc(); return false"></td></tr>
+<tr><th colspan="2">Result</th</tr>
+<tr><td colspan="2">
+  <table width="75%" align="center">
+  <tr><th>Level</th><th>Center</th><th>Northwest</th><th>Southeast</th></tr>
+  <tr><td>0 (128x128)</td><td><span id="l0c">(? ?)</span></td><td><span id="l0nw">[? ?]</span></td><td><span id="l0se">[? ?]</span></td></tr>
+  <tr><td>1 (256x256)</td><td><span id="l1c">(? ?)</span></td><td><span id="l1nw">[? ?]</span></td><td><span id="l1se">[? ?]</span></td></tr>
+  <tr><td>2 (512x512)</td><td><span id="l2c">(? ?)</span></td><td><span id="l2nw">[? ?]</span></td><td><span id="l2se">[? ?]</span></td></tr>
+  <tr><td>3 (1024x1024)</td><td><span id="l3c">(? ?)</span></td><td><span id="l3nw">[? ?]</span></td><td><span id="l3se">[? ?]</span></td></tr>
+  <tr><td>4 (2048x2048)</td><td><span id="l4c">(? ?)</span></td><td><span id="l4nw">[? ?]</span></td><td><span id="l4se">[? ?]</span></td></tr>
+  </table>
+</tr>
+</table>
+</body>
+</html>
